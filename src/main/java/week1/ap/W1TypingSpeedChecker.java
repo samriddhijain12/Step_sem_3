@@ -1,0 +1,58 @@
+public class W1TypingSpeedChecker{
+
+    public static void checkTypingAccuracy(String original, String typed) {
+        // Handle edge cases where strings are null or not of equal length
+        if (original == null || typed == null || original.length() != typed.length()) {
+            System.out.println("Error: Input strings must be non-null and of equal length.");
+            return;
+        }
+
+        int totalCharacters = original.length();
+        int matchedCharacters = 0;
+        int firstMismatchPosition = -1;
+        char originalChar = ' ';
+        char typedChar = ' ';
+
+        // Traverse both strings character by character
+        for (int i = 0; i < totalCharacters; i++) {
+            char oChar = original.charAt(i);
+            char tChar = typed.charAt(i);
+
+            if (oChar == tChar) {
+                matchedCharacters++;
+            } else {
+                // Record the first mismatch position (1-based index)
+                if (firstMismatchPosition == -1) {
+                    firstMismatchPosition = i + 1; 
+                    originalChar = oChar;
+                    typedChar = tChar;
+                }
+            }
+        }
+
+        // Calculate accuracy percentage
+        double accuracy = ((double) matchedCharacters / totalCharacters) * 100;
+
+        // Print the output based on the presence of mismatches
+        System.out.print("Matched: " + matchedCharacters + "/" + totalCharacters + " | ");
+        System.out.printf("Accuracy: %.2f%% | ", accuracy);
+
+        if (firstMismatchPosition == -1) {
+            System.out.println("No Mismatches");
+        } else {
+            System.out.println("First Mismatch at position " + firstMismatchPosition + 
+                               " ('" + originalChar + "' vs '" + typedChar + "')");
+        }
+    }
+
+    // Main method to test the sample inputs provided in the image
+    public static void main(String[] args) {
+        // Test Case 1
+        System.out.println("--- Test Case 1 ---");
+        checkTypingAccuracy("hello world", "hello worlt");
+
+        // Test Case 2
+        System.out.println("\n--- Test Case 2 ---");
+        checkTypingAccuracy("coding", "coding");
+    }
+}
